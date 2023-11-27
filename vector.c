@@ -29,63 +29,52 @@
 #ifndef _CVECTOR
 #define _CVECTOR 1
 
-#define declare_vector(Name, Tp) \
-    typedef struct Name \
+
+#define DECLARE_VECTOR(NAME, TYPE) \
+    typedef struct NAME \
     { \
         int capacity; \
         int size; \
-        Tp *data; \
-    } Name; \
+        TYPE *data; \
+    } NAME; \
     \
-    void Name##_initialize(Name *self) \
+    void NAME##_initialize(NAME *self) \
     { \
         self->capacity = 1; \
         self->size = 0; \
-        self->data = (Tp *)malloc(self->capacity * sizeof(Tp)); \
+        self->data = (TYPE *)malloc(self->capacity * sizeof(TYPE)); \
     } \
     \
-    void Name##_resize(Name *self, Tp size) \
+    void NAME##_resize(NAME *self, TYPE size) \
     { \
         self->capacity = 1; \
         while (self->capacity <= size) \
             self->capacity *= 2; \
         \
         self->size = size; \
-        self->data = (Tp *)realloc(self->data, self->capacity * sizeof(Tp)); \
+        self->data = (TYPE *)realloc(self->data, self->capacity * sizeof(TYPE)); \
     } \
     \
-    void Name##_push_back(Name *self, Tp item) \
+    void NAME##_push_back(NAME *self, TYPE item) \
     { \
         if (self->capacity == self->size) \
         { \
             self->capacity *= 2; \
-            self->data = (Tp *)realloc(self->data, self->capacity * sizeof(Tp)); \
+            self->data = (TYPE *)realloc(self->data, self->capacity * sizeof(TYPE)); \
         } \
         \
         self->data[self->size++] = item; \
     } \
     \
-    void Name##_pop_back(Name *self) \
+    void NAME##_pop_back(NAME *self) \
     { \
         if (self->capacity / 4 == --self->size) \
         { \
             self->capacity /= 2; \
-            self->data = (Tp *)realloc(self->data, self->capacity * sizeof(Tp)); \
+            self->data = (TYPE *)realloc(self->data, self->capacity * sizeof(TYPE)); \
         } \
     } \
-    \
-    void Name##_scan(Name *self) \
-    { \
-        for (int i = 0; i < self->size; i++) \
-            scanf("%d", self->data + i); \
-    } \
-    \
-    void Name##_print(Name *self) \
-    { \
-        for (int i = 0; i < self->size; i++) \
-            printf("%d ", self->data[i]); \
-        printf("\n"); \
-    }
+
 
 #endif /* _CVECTOR */
 
